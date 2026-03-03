@@ -67,13 +67,17 @@ export const Disclaimer: React.FC<DisclaimerProps> = ({ onAccept }) => {
           </div>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-8">
           <button
             onClick={onAccept}
             className="neon-button px-12 py-5 rounded-full font-orbitron text-[10px] font-bold tracking-[0.4em] text-white"
           >
             INISIASI PORTAL
           </button>
+          
+          <p className="font-orbitron text-[8px] tracking-[0.4em] text-white/20 uppercase">
+            Dibuat oleh Xzam
+          </p>
         </div>
       </motion.div>
     </div>

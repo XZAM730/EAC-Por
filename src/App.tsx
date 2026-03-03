@@ -80,9 +80,9 @@ export default function App() {
 
       {/* Ambient Sound (Optional - Visual indicator only as per guidelines) */}
       <div className="fixed bottom-6 right-6 z-20">
-        <div className="flex items-center gap-3 glass px-4 py-2 rounded-full border border-neon-cyan/20">
-          <div className="w-2 h-2 bg-neon-cyan rounded-full animate-pulse" />
-          <span className="font-orbitron text-[10px] tracking-widest text-neon-cyan/60 uppercase">System Active</span>
+        <div className="flex items-center gap-3 glass px-4 py-2 rounded-full border border-white/10">
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+          <span className="font-orbitron text-[10px] tracking-widest text-white/40 uppercase">System Active</span>
         </div>
       </div>
     </div>

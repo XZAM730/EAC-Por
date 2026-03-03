@@ -101,6 +101,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </motion.div>
         ))}
       </div>
+
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="mt-24 text-center"
+      >
+        <p className="font-orbitron text-[9px] tracking-[0.5em] text-white/20 uppercase">
+          EAC Astronomy Portal &copy; 2026 <span className="mx-4">|</span> Dibuat oleh Xzam
+        </p>
+      </motion.footer>
     </div>
   );
 };
