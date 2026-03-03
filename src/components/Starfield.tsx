@@ -11,8 +11,7 @@ export const Starfield: React.FC = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let stars: { x: number; y: number; size: number; speed: number; opacity: number }[] = [];
-    let clouds: { x: number; y: number; radius: number; opacity: number }[] = [];
+    let stars: { x: number; y: number; z: number; size: number; color: string; opacity: number; twinkle: number }[] = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -22,59 +21,59 @@ export const Starfield: React.FC = () => {
 
     const initStars = () => {
       stars = [];
-      const count = Math.floor((canvas.width * canvas.height) / 1500);
+      const count = Math.floor((canvas.width * canvas.height) / 2000);
       for (let i = 0; i < count; i++) {
+        const z = Math.random() * canvas.width;
+        const colors = ['#ffffff', '#f2b05e', '#e2e8f0', '#ffffff'];
         stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2,
-          speed: Math.random() * 0.02 + 0.005,
+          x: Math.random() * canvas.width - canvas.width / 2,
+          y: Math.random() * canvas.height - canvas.height / 2,
+          z: z,
+          size: Math.random() * 1.5 + 0.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
           opacity: Math.random(),
-        });
-      }
-
-      clouds = [];
-      for (let i = 0; i < 5; i++) {
-        clouds.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 400 + 200,
-          opacity: Math.random() * 0.05,
+          twinkle: Math.random() * 0.05,
         });
       }
     };
 
     const draw = () => {
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
 
-      // Draw Nebula Clouds
-      clouds.forEach(cloud => {
-        const gradient = ctx.createRadialGradient(cloud.x, cloud.y, 0, cloud.x, cloud.y, cloud.radius);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${cloud.opacity})`);
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      });
-
-      // Draw Stars
       stars.forEach((star) => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.fill();
+        // Simple 3D projection
+        const k = 128 / star.z;
+        const px = star.x * k + centerX;
+        const py = star.y * k + centerY;
 
-        star.y += star.speed;
-        star.opacity += (Math.random() - 0.5) * 0.05;
-        if (star.opacity < 0.1) star.opacity = 0.1;
-        if (star.opacity > 1) star.opacity = 1;
+        if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+          const size = star.size * k;
+          const opacity = (1 - star.z / canvas.width) * star.opacity;
 
-        if (star.y > canvas.height) {
-          star.y = 0;
-          star.x = Math.random() * canvas.width;
+          ctx.beginPath();
+          ctx.arc(px, py, size / 2, 0, Math.PI * 2);
+          ctx.fillStyle = star.color;
+          ctx.globalAlpha = opacity;
+          ctx.fill();
+          
+          // Subtle twinkle
+          star.opacity += star.twinkle;
+          if (star.opacity > 1 || star.opacity < 0.2) star.twinkle *= -1;
+        }
+
+        // Move stars towards viewer
+        star.z -= 0.2;
+        if (star.z <= 0) {
+          star.z = canvas.width;
+          star.x = Math.random() * canvas.width - canvas.width / 2;
+          star.y = Math.random() * canvas.height - canvas.height / 2;
         }
       });
 
+      ctx.globalAlpha = 1;
       animationFrameId = requestAnimationFrame(draw);
     };
 
@@ -89,9 +88,13 @@ export const Starfield: React.FC = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-[-1] pointer-events-none"
-    />
+    <>
+      <div className="nebula-bg" />
+      <div className="nebula-texture" />
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 z-[-1] pointer-events-none"
+      />
+    </>
   );
 };

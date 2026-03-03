@@ -34,13 +34,15 @@ export const Loader: React.FC<{ status?: string }> = ({ status = "Menghubungkan 
             {/* Black Hole in the 'C' */}
             <div className="absolute left-[15%] top-[45%] w-16 h-16 pointer-events-none">
               {/* Event Horizon */}
-              <div className="absolute inset-0 bg-black rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] z-10" />
+              <div className="absolute inset-0 bg-black rounded-full shadow-[0_0_30px_rgba(255,255,255,0.6)] z-10" />
               
-              {/* Accretion Disk */}
-              <div className="absolute inset-[-100%] border-[2px] border-[#f2b05e] rounded-full opacity-60 blur-[1px] black-hole-disk" 
-                   style={{ transform: 'rotate(70deg) scaleY(0.2)' }} />
-              <div className="absolute inset-[-120%] border-[4px] border-[#f2b05e] rounded-full opacity-30 blur-[4px] black-hole-disk" 
-                   style={{ transform: 'rotate(70deg) scaleY(0.2)', animationDelay: '-2s' }} />
+              {/* Accretion Disk - More realistic like logo */}
+              <div className="absolute inset-[-150%] border-[1px] border-[#f2b05e] rounded-full opacity-80 blur-[2px] black-hole-disk" 
+                   style={{ transform: 'rotate(70deg) scaleY(0.15)' }} />
+              <div className="absolute inset-[-180%] border-[3px] border-[#f2b05e] rounded-full opacity-40 blur-[6px] black-hole-disk" 
+                   style={{ transform: 'rotate(70deg) scaleY(0.15)', animationDelay: '-2s' }} />
+              <div className="absolute inset-[-220%] border-[1px] border-white/20 rounded-full opacity-20 blur-[10px] black-hole-disk" 
+                   style={{ transform: 'rotate(70deg) scaleY(0.15)', animationDelay: '-4s' }} />
             </div>
           </div>
         </div>

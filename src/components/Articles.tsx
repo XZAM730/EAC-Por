@@ -56,7 +56,7 @@ export const Articles: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     : ARTICLES.filter(a => a.category === filter);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
+    <div className="max-w-7xl mx-auto px-6 py-8 md:py-16">
       <AnimatePresence mode="wait">
         {!selectedArticle ? (
           <motion.div
@@ -65,23 +65,23 @@ export const Articles: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 mb-16">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 mb-16 md:mb-24">
               <div>
                 <button
                   onClick={onBack}
-                  className="mb-6 flex items-center gap-2 text-white/40 hover:text-white transition-colors font-orbitron text-[10px] tracking-[0.3em]"
+                  className="mb-6 flex items-center gap-2 text-white/40 hover:text-white transition-colors font-orbitron text-[9px] md:text-[10px] tracking-[0.3em] uppercase"
                 >
                   <ArrowLeft size={14} /> KEMBALI KE HUB
                 </button>
-                <h1 className="eac-logo-text text-4xl md:text-5xl font-black tracking-tighter">WARTA ANTARIKSA</h1>
+                <h1 className="eac-logo-text text-4xl md:text-6xl font-black tracking-tighter">WARTA ANTARIKSA</h1>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 md:gap-3">
                 {categories.map(cat => (
                   <button
                     key={cat}
                     onClick={() => setFilter(cat)}
-                    className={`px-6 py-2 rounded-full font-orbitron text-[9px] tracking-[0.2em] transition-all border ${filter === cat ? 'bg-white text-black border-white' : 'bg-white/[0.02] text-white/40 border-white/10 hover:border-white/30'}`}
+                    className={`px-4 md:px-6 py-2 rounded-full font-orbitron text-[8px] md:text-[9px] tracking-[0.2em] transition-all border ${filter === cat ? 'bg-white text-black border-white' : 'bg-white/[0.02] text-white/40 border-white/10 hover:border-white/30'}`}
                   >
                     {cat.toUpperCase()}
                   </button>
@@ -89,7 +89,7 @@ export const Articles: React.FC<{ onBack: () => void }> = ({ onBack }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
               {filteredArticles.map((article, idx) => (
                 <motion.div
                   key={article.id}
@@ -99,21 +99,21 @@ export const Articles: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   onClick={() => setSelectedArticle(article)}
                   className="group glass rounded-[2.5rem] overflow-hidden cursor-pointer hover:bg-white/[0.05] transition-all duration-500 border border-white/5 hover:border-white/20"
                 >
-                  <div className="h-56 overflow-hidden relative">
+                  <div className="h-56 md:h-72 overflow-hidden relative">
                     <img 
                       src={article.image} 
                       alt={article.title} 
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute top-6 left-6 bg-white text-black px-4 py-1 rounded-full font-orbitron text-[8px] font-bold tracking-widest">
-                      {article.category.toUpperCase()}
+                    <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md text-black px-4 py-1.5 rounded-full font-orbitron text-[8px] font-bold tracking-widest uppercase">
+                      {article.category}
                     </div>
                   </div>
-                  <div className="p-10">
-                    <h3 className="font-orbitron text-xl font-bold mb-4 tracking-widest group-hover:text-white transition-colors leading-tight">{article.title}</h3>
+                  <div className="p-8 md:p-12">
+                    <h3 className="font-orbitron text-lg md:text-xl font-bold mb-4 tracking-widest group-hover:text-white transition-colors leading-tight">{article.title}</h3>
                     <p className="text-xs text-white/40 line-clamp-2 mb-8 font-light leading-relaxed">{article.excerpt}</p>
-                    <div className="flex items-center gap-3 text-[9px] font-orbitron font-bold text-white/60 group-hover:text-white transition-all tracking-[0.2em]">
+                    <div className="flex items-center gap-3 text-[8px] md:text-[9px] font-orbitron font-bold text-white/60 group-hover:text-white transition-all tracking-[0.2em]">
                       BACA SELENGKAPNYA <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -131,40 +131,65 @@ export const Articles: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           >
             <button
               onClick={() => setSelectedArticle(null)}
-              className="mb-10 flex items-center gap-2 text-white/40 hover:text-white transition-colors font-orbitron text-[10px] tracking-[0.3em]"
+              className="mb-10 flex items-center gap-2 text-white/40 hover:text-white transition-colors font-orbitron text-[9px] md:text-[10px] tracking-[0.3em] uppercase"
             >
               <ArrowLeft size={14} /> KEMBALI KE DAFTAR
             </button>
 
             <article className="glass rounded-[3rem] overflow-hidden border border-white/5">
-              <img 
-                src={selectedArticle.image} 
-                alt={selectedArticle.title} 
-                className="w-full h-[400px] md:h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-                referrerPolicy="no-referrer"
-              />
-              <div className="p-10 md:p-20">
+              <div className="h-[300px] md:h-[500px] overflow-hidden relative">
+                <img 
+                  src={selectedArticle.image} 
+                  alt={selectedArticle.title} 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              </div>
+              <div className="p-8 md:p-20">
                 <div className="flex items-center gap-6 mb-10">
-                  <span className="bg-white/5 text-white/60 px-5 py-1.5 rounded-full font-orbitron text-[9px] font-bold tracking-[0.3em] border border-white/10">
-                    {selectedArticle.category.toUpperCase()}
+                  <span className="bg-white/5 text-white/60 px-5 py-1.5 rounded-full font-orbitron text-[8px] md:text-[9px] font-bold tracking-[0.3em] border border-white/10 uppercase">
+                    {selectedArticle.category}
                   </span>
-                  <span className="text-white/20 text-[9px] font-orbitron tracking-[0.2em]">EST. 5 MIN READ</span>
+                  <span className="text-white/20 text-[8px] md:text-[9px] font-orbitron tracking-[0.2em] uppercase">EST. 5 MENIT BACA</span>
                 </div>
-                <h1 className="font-orbitron text-4xl md:text-6xl font-black mb-12 leading-[1.1] tracking-tighter">{selectedArticle.title}</h1>
+                <h1 className="font-orbitron text-3xl md:text-6xl font-black mb-12 leading-[1.1] tracking-tighter">{selectedArticle.title}</h1>
                 <div className="prose prose-invert max-w-none">
-                  <p className="text-xl text-white/70 leading-relaxed font-light font-sans">
+                  <p className="text-sm md:text-xl text-white/70 leading-relaxed font-light font-sans mb-8">
                     {selectedArticle.content}
                   </p>
                   <div className="my-12 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  <p className="text-lg text-white/50 leading-relaxed font-light font-sans">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  <p className="text-sm md:text-lg text-white/50 leading-relaxed font-light font-sans">
+                    Eksplorasi ini merupakan bagian dari misi jangka panjang komunitas EAC untuk memetakan objek-objek menarik di langit malam dan memberikan edukasi publik mengenai pentingnya ilmu astronomi bagi peradaban manusia. Kami percaya bahwa dengan memahami alam semesta, kita dapat lebih menghargai keberadaan kita di Bumi.
                   </p>
+                </div>
+
+                <div className="mt-16 pt-10 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
+                      <Globe size={18} className="text-white/60" />
+                    </div>
+                    <div>
+                      <p className="text-[7px] md:text-[8px] font-orbitron text-white/20 uppercase tracking-[0.2em]">Penulis</p>
+                      <p className="text-[9px] md:text-[10px] font-orbitron text-white/60 uppercase tracking-[0.1em]">Tim Redaksi EAC</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedArticle(null)}
+                    className="neon-button px-10 py-4 rounded-full font-orbitron text-[9px] font-bold tracking-[0.3em] text-white uppercase"
+                  >
+                    KEMBALI KE DAFTAR
+                  </button>
                 </div>
               </div>
             </article>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <p className="mt-16 font-orbitron text-[8px] tracking-[0.4em] text-white/20 uppercase text-center">
+        EAC Astronomy Portal &copy; 2026 <span className="mx-4">|</span> Dibuat oleh Xzam
+      </p>
     </div>
   );
 };
